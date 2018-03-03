@@ -1,2 +1,2 @@
 # 101
-test
+test mvn build
