@@ -1,2 +1,2 @@
 # 101
-test mvn build 2
+test deploy
