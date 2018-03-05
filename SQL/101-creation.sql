@@ -36,7 +36,7 @@ conn "101"/p4ssw0rd
 /*******************************************************************************
    Create Tables
 ********************************************************************************/
-CREATE TABLE 'user'
+CREATE TABLE users
 (
     user_id NUMBER PRIMARY KEY,
     username VARCHAR2(50) UNIQUE NOT NULL,
@@ -147,22 +147,22 @@ CREATE TABLE fc_to_set
    Create Foreign Keys
 ********************************************************************************/
 /**
-* user
+* users
 **/
-ALTER TABLE 'user' ADD CONSTRAINT role_id_fk_auth
+ALTER TABLE users ADD CONSTRAINT role_id_fk_auth
     FOREIGN KEY (role_id) REFERENCES role (role_id) ON DELETE CASCADE;
     
 /**
 * post
 **/
 ALTER TABLE post ADD CONSTRAINT post_author_id_fk_auth
-    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE CASCADE;
+    FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE;
     
 /**
 * quiz
 **/
 ALTER TABLE quiz ADD CONSTRAINT quiz_author_id_fk_auth
-    FOREIGN KEY (author_id) REFERENCES 'user' (user_id) ON DELETE CASCADE;
+    FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE;
     
 /**
 * question
@@ -177,7 +177,7 @@ ALTER TABLE fc_set ADD CONSTRAINT subject_id_fk_auth
     FOREIGN KEY (subject_id) REFERENCES subject (subject_id) ON DELETE CASCADE;
     
 ALTER TABLE fc_set ADD CONSTRAINT set_author_id_fk_auth
-    FOREIGN KEY (author_id) REFERENCES 'user' (user_id) ON DELETE CASCADE;
+    FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE;
 
 /**
 * flashcard
@@ -186,7 +186,7 @@ ALTER TABLE flashcard ADD CONSTRAINT fc_set_id_fk_auth
     FOREIGN KEY (fc_set_id) REFERENCES subject (subject_id) ON DELETE CASCADE;
 
 ALTER TABLE flashcard ADD CONSTRAINT fc_author_id_fk_auth
-    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE CASCADE;
+    FOREIGN KEY (author_id) REFERENCES users (user_id) ON DELETE CASCADE;
 
 /*******************************************************************************
    Create Sequences
@@ -215,7 +215,7 @@ CREATE SEQUENCE flashcard_id_seq;
    Create Triggers
 ********************************************************************************/
 CREATE OR REPLACE TRIGGER user_id_trig
-    BEFORE INSERT OR UPDATE ON user
+    BEFORE INSERT OR UPDATE ON users
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -356,6 +356,6 @@ CREATE OR REPLACE TRIGGER flashcard_id_trig
 
 /*******************************************************************************
    Commit changes and exit
-********************************************************************************/
+*******************************************************************************/
 COMMIT;
 EXIT;
