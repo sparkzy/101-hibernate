@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +14,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "101_subject")
 public class Subject {
 	@Id
 	@Column(name = "subject_id")
-	@SequenceGenerator(name = "101_subject_id_seq", sequenceName = "101_subject_id_seq")
-	@GeneratedValue(generator = "101_subject_id_seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "subject_id_seq", sequenceName = "subject_id_seq")
+	@GeneratedValue(generator = "subject_id_seq", strategy = GenerationType.AUTO)
 	private int subjectId;
 
 	@Column(name = "subject_name")

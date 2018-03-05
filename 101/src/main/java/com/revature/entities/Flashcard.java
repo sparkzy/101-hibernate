@@ -14,12 +14,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "101_flashcard")
 public class Flashcard {
 
 	@Id
-	@Column(name = "FLASHCARD_ID")
+	@Column(name = "flashcard_id")
 	@SequenceGenerator(name = "FLASHCARD_ID_SEQ", sequenceName = "FLASHCARD_ID_SEQ")
 	@GeneratedValue(generator = "FLASHCARD_ID_SEQ", strategy = GenerationType.AUTO)
 	private int flashcardId;

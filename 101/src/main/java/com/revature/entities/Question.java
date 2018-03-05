@@ -2,6 +2,7 @@ package com.revature.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "101_question")
 public class Question {
 	@Id
 	@Column(name = "question_id")
-	@SequenceGenerator(name = "101_question_id_seq", sequenceName = "101_question_id_seq")
-	@GeneratedValue(generator = "101_question_id_seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "question_id_seq", sequenceName = "question_id_seq")
+	@GeneratedValue(generator = "question_id_seq", strategy = GenerationType.AUTO)
 	private int questionId;
 
 	@Column(name = "quiz_id")

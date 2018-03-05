@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "101_post")
 public class Post {
 	@Id
 	@Column(name = "post_id")
-	@SequenceGenerator(name = "101_post_id_seq", sequenceName = "101_post_id_seq")
-	@GeneratedValue(generator = "101_post_id_seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "post_id_seq", sequenceName = "post_id_seq")
+	@GeneratedValue(generator = "post_id_seq", strategy = GenerationType.AUTO)
 	private int postId;
 
 	private String title;
