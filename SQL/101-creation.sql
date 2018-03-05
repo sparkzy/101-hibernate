@@ -36,7 +36,7 @@ conn "101"/p4ssw0rd
 /*******************************************************************************
    Create Tables
 ********************************************************************************/
-CREATE TABLE "101_user"
+CREATE TABLE 'user'
 (
     user_id NUMBER PRIMARY KEY,
     username VARCHAR2(50) UNIQUE NOT NULL,
@@ -47,13 +47,13 @@ CREATE TABLE "101_user"
     role_id NUMBER
 );
 
-CREATE TABLE "101_role"
+CREATE TABLE role
 (
     role_id NUMBER PRIMARY KEY,
     role VARCHAR(100) UNIQUE NOT NULL
 );
 
-CREATE TABLE "101_post"
+CREATE TABLE post
 (
     post_id NUMBER PRIMARY KEY,
     title VARCHAR2(50) NOT NULL,
@@ -65,19 +65,19 @@ CREATE TABLE "101_post"
 --    first_comment NUMBER
 );
 
-CREATE TABLE "101_subject"
+CREATE TABLE subject
 (
     subject_id NUMBER PRIMARY KEY,
     subject_name VARCHAR2(50)
 );
 
-CREATE TABLE "101_status"
+CREATE TABLE status
 (
     status_id NUMBER PRIMARY KEY,
     status_name VARCHAR2(50)
 );
 
-CREATE TABLE "101_quiz"
+CREATE TABLE quiz
 (
     quiz_id NUMBER PRIMARY KEY,
     subject_id NUMBER,
@@ -87,7 +87,7 @@ CREATE TABLE "101_quiz"
     author_id NUMBER
 );
 
-CREATE TABLE "101_question"
+CREATE TABLE question
 (
     question_id NuMBER PRIMARY KEY,
     quiz_id NUMBER,
@@ -97,7 +97,7 @@ CREATE TABLE "101_question"
     wrong_answer_2 VARCHAR2(200) NOT NULL
 );
 
-CREATE TABLE "101_fc_set"
+CREATE TABLE fc_set
 (
     fc_set_id NUMBER PRIMARY KEY,
     title VARCHAR2(30) NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE "101_fc_set"
     likes NUMBER
 );
 
-CREATE TABLE "101_flashcard"
+CREATE TABLE flashcard
 (
     flashcard_id NUMBER PRIMARY KEY,
     fc_set_id NUMBER,
@@ -115,7 +115,7 @@ CREATE TABLE "101_flashcard"
     author_id NUMBER
 );
 
---CREATE TABLE "101_comment"
+--CREATE TABLE comment
 --(
 --    
 --);
@@ -123,14 +123,14 @@ CREATE TABLE "101_flashcard"
 /*******************************************************************************
    Create Junction Tables
 ********************************************************************************/
-CREATE TABLE "101_post_to_subject"
+CREATE TABLE post_to_subject
 (
     post_id NUMBER,
     subject_id NUMBER,
     CONSTRAINT pk_composite_p2s_key PRIMARY KEY (post_id, subject_id)
 );
 
-CREATE TABLE "101_fc_to_set"
+CREATE TABLE fc_to_set
 (
     flashcard_id NUMBER,
     fc_set_id NUMBER,
@@ -147,46 +147,46 @@ CREATE TABLE "101_fc_to_set"
    Create Foreign Keys
 ********************************************************************************/
 /**
-* 101_user
+* user
 **/
-ALTER TABLE "101_user" ADD CONSTRAINT "101_role_id_fk_auth"
-    FOREIGN KEY (role_id) REFERENCES "101_role" (role_id) ON DELETE CASCADE;
+ALTER TABLE 'user' ADD CONSTRAINT role_id_fk_auth
+    FOREIGN KEY (role_id) REFERENCES role (role_id) ON DELETE CASCADE;
     
 /**
-* 101_post
+* post
 **/
-ALTER TABLE "101_post" ADD CONSTRAINT "101_post_author_id_fk_auth"
-    FOREIGN KEY (author_id) REFERENCES "101_user" (user_id) ON DELETE CASCADE;
+ALTER TABLE post ADD CONSTRAINT post_author_id_fk_auth
+    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE CASCADE;
     
 /**
-* 101_quiz
+* quiz
 **/
-ALTER TABLE "101_quiz" ADD CONSTRAINT "101_quiz_author_id_fk_auth"
-    FOREIGN KEY (author_id) REFERENCES "101_user" (user_id) ON DELETE CASCADE;
+ALTER TABLE quiz ADD CONSTRAINT quiz_author_id_fk_auth
+    FOREIGN KEY (author_id) REFERENCES 'user' (user_id) ON DELETE CASCADE;
     
 /**
-* 101_question
+* question
 **/
-ALTER TABLE "101_question" ADD CONSTRAINT "101_quiz_id_fk_auth"
-    FOREIGN KEY (quiz_id) REFERENCES "101_quiz" (quiz_id) ON DELETE CASCADE;
+ALTER TABLE question ADD CONSTRAINT quiz_id_fk_auth
+    FOREIGN KEY (quiz_id) REFERENCES quiz (quiz_id) ON DELETE CASCADE;
     
 /**
-* 101_fc_set
+* fc_set
 **/
-ALTER TABLE "101_fc_set" ADD CONSTRAINT "101_subject_id_fk_auth"
-    FOREIGN KEY (subject_id) REFERENCES "101_subject" (subject_id) ON DELETE CASCADE;
+ALTER TABLE fc_set ADD CONSTRAINT subject_id_fk_auth
+    FOREIGN KEY (subject_id) REFERENCES subject (subject_id) ON DELETE CASCADE;
     
-ALTER TABLE "101_fc_set" ADD CONSTRAINT "101_set_author_id_fk_auth"
-    FOREIGN KEY (author_id) REFERENCES "101_user" (user_id) ON DELETE CASCADE;
+ALTER TABLE fc_set ADD CONSTRAINT set_author_id_fk_auth
+    FOREIGN KEY (author_id) REFERENCES 'user' (user_id) ON DELETE CASCADE;
 
 /**
-* 101_flashcard
+* flashcard
 **/
-ALTER TABLE "101_flashcard" ADD CONSTRAINT "101_fc_set_id_fk_auth"
-    FOREIGN KEY (fc_set_id) REFERENCES "101_subject" (subject_id) ON DELETE CASCADE;
+ALTER TABLE flashcard ADD CONSTRAINT fc_set_id_fk_auth
+    FOREIGN KEY (fc_set_id) REFERENCES subject (subject_id) ON DELETE CASCADE;
 
-ALTER TABLE "101_flashcard" ADD CONSTRAINT "101_fc_author_id_fk_auth"
-    FOREIGN KEY (author_id) REFERENCES "101_user" (user_id) ON DELETE CASCADE;
+ALTER TABLE flashcard ADD CONSTRAINT fc_author_id_fk_auth
+    FOREIGN KEY (author_id) REFERENCES user (user_id) ON DELETE CASCADE;
 
 /*******************************************************************************
    Create Sequences
@@ -215,7 +215,7 @@ CREATE SEQUENCE flashcard_id_seq;
    Create Triggers
 ********************************************************************************/
 CREATE OR REPLACE TRIGGER user_id_trig
-    BEFORE INSERT OR UPDATE ON "101_user"
+    BEFORE INSERT OR UPDATE ON user
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -227,7 +227,7 @@ CREATE OR REPLACE TRIGGER user_id_trig
     /
     
 CREATE OR REPLACE TRIGGER role_id_trig
-    BEFORE INSERT OR UPDATE ON "101_role"
+    BEFORE INSERT OR UPDATE ON role
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -239,7 +239,7 @@ CREATE OR REPLACE TRIGGER role_id_trig
     /
 
 CREATE OR REPLACE TRIGGER post_id_trig
-    BEFORE INSERT OR UPDATE ON "101_post"
+    BEFORE INSERT OR UPDATE ON post
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -252,7 +252,7 @@ CREATE OR REPLACE TRIGGER post_id_trig
     /
 
 CREATE OR REPLACE TRIGGER subject_id_trig
-    BEFORE INSERT OR UPDATE ON "101_subject"
+    BEFORE INSERT OR UPDATE ON subject
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -264,7 +264,7 @@ CREATE OR REPLACE TRIGGER subject_id_trig
     /
     
 CREATE OR REPLACE TRIGGER status_id_trig
-    BEFORE INSERT OR UPDATE ON "101_status"
+    BEFORE INSERT OR UPDATE ON status
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -276,7 +276,7 @@ CREATE OR REPLACE TRIGGER status_id_trig
     /
     
 CREATE OR REPLACE TRIGGER quiz_id_trig
-    BEFORE INSERT OR UPDATE ON "101_quiz"
+    BEFORE INSERT OR UPDATE ON quiz
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -289,7 +289,7 @@ CREATE OR REPLACE TRIGGER quiz_id_trig
     /
     
 CREATE OR REPLACE TRIGGER question_id_trig
-    BEFORE INSERT OR UPDATE ON "101_question"
+    BEFORE INSERT OR UPDATE ON question
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -301,7 +301,7 @@ CREATE OR REPLACE TRIGGER question_id_trig
     /
     
 CREATE OR REPLACE TRIGGER fc_set_id_trig
-    BEFORE INSERT OR UPDATE ON "101_fc_set"
+    BEFORE INSERT OR UPDATE ON fc_set
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -314,7 +314,7 @@ CREATE OR REPLACE TRIGGER fc_set_id_trig
     /
     
 CREATE OR REPLACE TRIGGER flashcard_id_trig
-    BEFORE INSERT OR UPDATE ON "101_flashcard"
+    BEFORE INSERT OR UPDATE ON flashcard
     FOR EACH ROW
     BEGIN
         IF INSERTING THEN
@@ -326,7 +326,7 @@ CREATE OR REPLACE TRIGGER flashcard_id_trig
     /
     
 --CREATE OR REPLACE TRIGGER comment_id_trig
---    BEFORE INSERT OR UPDATE ON "101_comment"
+--    BEFORE INSERT OR UPDATE ON comment
 --    FOR EACH ROW
 --    BEGIN
 --        IF INSERTING THEN
@@ -353,7 +353,6 @@ CREATE OR REPLACE TRIGGER flashcard_id_trig
 /*******************************************************************************
    Initialize Tables
 ********************************************************************************/
---INSERT INTO ers_user_roles (user_role) VALUES ('Employee');
 
 /*******************************************************************************
    Commit changes and exit
