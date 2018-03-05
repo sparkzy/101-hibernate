@@ -13,24 +13,24 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_user")
+@Table(name = "users")
 public class User {
 	@Id
-	@Column(name = "user_id")
-	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
-	@GeneratedValue(generator = "user_id_seq", strategy = GenerationType.AUTO)
+	@Column(name = "USER_ID")
+	@SequenceGenerator(name = "USER_ID_SEQ", sequenceName = "USER_ID_SEQ")
+	@GeneratedValue(generator = "USER_ID_SEQ", strategy = GenerationType.AUTO)
 	private int userId;
 
 	private String username;
 	private String password;
 	private String email;
-	@Column(name = "first_name")
+	@Column(name = "FIRST_NAME")
 	private String firstname;
-	@Column(name = "last_name")
+	@Column(name = "LAST_NAME")
 	private String lastname;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "role_id")
+	@JoinColumn(name = "ROLE_ID")
 	private Role userRole;
 
 	public User() {

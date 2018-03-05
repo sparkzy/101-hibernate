@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_subject")
+@Table(name = "subject")
 public class Subject {
 	@Id
 	@Column(name = "subject_id")
@@ -28,7 +28,7 @@ public class Subject {
 	@Column(name = "subject_name")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_id")
-	private Post subjectName;
+	private Set<Post> subjectName;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "101_post_to_subject", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
@@ -38,7 +38,7 @@ public class Subject {
 		super();
 	}
 
-	public Subject(int subjectId, Post subjectName, Set<Post> posts) {
+	public Subject(int subjectId, Set<Post> subjectName, Set<Post> posts) {
 		this.subjectId = subjectId;
 		this.subjectName = subjectName;
 		this.posts = posts;
@@ -52,11 +52,11 @@ public class Subject {
 		this.subjectId = subjectId;
 	}
 
-	public Post getSubjectName() {
+	public Set<Post> getSubjectName() {
 		return subjectName;
 	}
 
-	public void setSubjectName(Post subjectName) {
+	public void setSubjectName(Set<Post> subjectName) {
 		this.subjectName = subjectName;
 	}
 

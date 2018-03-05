@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_role")
+@Table(name = "role")
 public class Role {
 	@Id
 	@Column(name = "role_id")
@@ -23,13 +25,13 @@ public class Role {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private Role role;
+	private Set<Role> role;
 
 	public Role() {
 		super();
 	}
 
-	public Role(int roleId, Role role) {
+	public Role(int roleId, Set<Role> role) {
 		this.roleId = roleId;
 		this.role = role;
 	}
@@ -42,11 +44,11 @@ public class Role {
 		this.roleId = roleId;
 	}
 
-	public Role getRole() {
+	public Set<Role> getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(Set<Role> role) {
 		this.role = role;
 	}
 

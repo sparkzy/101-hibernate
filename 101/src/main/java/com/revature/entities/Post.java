@@ -18,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_post")
+@Table(name = "post")
 public class Post {
 	@Id
 	@Column(name = "post_id")
@@ -31,12 +31,11 @@ public class Post {
 	@Column(name = "user_id")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
-	private User authorId;
+	private Set<User> authorId;
 
 	private String body;
 	private int likes;
 
-	@Column(name = "status_id")
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "status_id")
 	private Status statusId;
@@ -49,13 +48,71 @@ public class Post {
 		super();
 	}
 
-	public Post(int postId, String title, User authorId, String body, int likes, Status statusId) {
+	public Post(int postId, String title, Set<User> authorId, String body, int likes, Status statusId,
+			Set<Subject> subjects) {
 		this.postId = postId;
 		this.title = title;
 		this.authorId = authorId;
 		this.body = body;
 		this.likes = likes;
 		this.statusId = statusId;
+		this.subjects = subjects;
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Set<User> getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Set<User> authorId) {
+		this.authorId = authorId;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public Status getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Status statusId) {
+		this.statusId = statusId;
+	}
+
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
 	@Override
@@ -67,6 +124,7 @@ public class Post {
 		result = prime * result + likes;
 		result = prime * result + postId;
 		result = prime * result + ((statusId == null) ? 0 : statusId.hashCode());
+		result = prime * result + ((subjects == null) ? 0 : subjects.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -99,6 +157,11 @@ public class Post {
 				return false;
 		} else if (!statusId.equals(other.statusId))
 			return false;
+		if (subjects == null) {
+			if (other.subjects != null)
+				return false;
+		} else if (!subjects.equals(other.subjects))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -110,6 +173,6 @@ public class Post {
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", title=" + title + ", authorId=" + authorId + ", body=" + body + ", likes="
-				+ likes + ", statusId=" + statusId + "]";
+				+ likes + ", statusId=" + statusId + ", subjects=" + subjects + "]";
 	}
 }

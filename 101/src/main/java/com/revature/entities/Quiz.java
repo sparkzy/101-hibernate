@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_quiz")
+@Table(name = "quiz")
 public class Quiz {
 	@Id
 	@Column(name = "quiz_id")
@@ -25,12 +27,11 @@ public class Quiz {
 	@Column(name = "subject_id")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "subject_id")
-	private int subjectId;
+	private Set<Subject> subjectId;
 
 	private int likes;
 	private String title;
 
-	@Column(name = "author_id")
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User authorId;
@@ -39,7 +40,7 @@ public class Quiz {
 		super();
 	}
 
-	public Quiz(int quizId, int subjectId, int likes, String title, User authorId) {
+	public Quiz(int quizId, Set<Subject> subjectId, int likes, String title, User authorId) {
 		this.quizId = quizId;
 		this.subjectId = subjectId;
 		this.likes = likes;
@@ -55,11 +56,11 @@ public class Quiz {
 		this.quizId = quizId;
 	}
 
-	public int getSubjectId() {
+	public Set<Subject> getSubjectId() {
 		return subjectId;
 	}
 
-	public void setSubjectId(int subjectId) {
+	public void setSubjectId(Set<Subject> subjectId) {
 		this.subjectId = subjectId;
 	}
 
@@ -94,7 +95,7 @@ public class Quiz {
 		result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
 		result = prime * result + likes;
 		result = prime * result + quizId;
-		result = prime * result + subjectId;
+		result = prime * result + ((subjectId == null) ? 0 : subjectId.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -117,7 +118,10 @@ public class Quiz {
 			return false;
 		if (quizId != other.quizId)
 			return false;
-		if (subjectId != other.subjectId)
+		if (subjectId == null) {
+			if (other.subjectId != null)
+				return false;
+		} else if (!subjectId.equals(other.subjectId))
 			return false;
 		if (title == null) {
 			if (other.title != null)

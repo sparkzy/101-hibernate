@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_fc_set")
+@Table(name = "fc_set")
 public class FlashcardSet {
 
 	@Id
@@ -24,12 +24,10 @@ public class FlashcardSet {
 
 	private int title;
 
-	@Column(name = "subject_id")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "subject_id")
 	private Subject subjectId;
 
-	@Column(name = "author_id")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private Subject authorId;

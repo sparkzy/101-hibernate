@@ -1,5 +1,7 @@
 package com.revature.entities;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "101_question")
+@Table(name = "question")
 public class Question {
 	@Id
 	@Column(name = "question_id")
@@ -24,7 +26,7 @@ public class Question {
 	@Column(name = "quiz_id")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "quiz_id")
-	private Quiz quizId;
+	private Set<Quiz> quizId;
 
 	@Column(name = "correct_answer")
 	private String correctAnswer;
@@ -42,7 +44,7 @@ public class Question {
 		super();
 	}
 
-	public Question(int questionId, Quiz quizId, String correctAnswer, String wrongAnswer1, String wrongAnswer2,
+	public Question(int questionId, Set<Quiz> quizId, String correctAnswer, String wrongAnswer1, String wrongAnswer2,
 			String wrongAnswer3) {
 		this.questionId = questionId;
 		this.quizId = quizId;
@@ -60,11 +62,11 @@ public class Question {
 		this.questionId = questionId;
 	}
 
-	public Quiz getQuizId() {
+	public Set<Quiz> getQuizId() {
 		return quizId;
 	}
 
-	public void setQuizId(Quiz quizId) {
+	public void setQuizId(Set<Quiz> quizId) {
 		this.quizId = quizId;
 	}
 
