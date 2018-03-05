@@ -38,7 +38,6 @@ public class FlashcardSet {
 
 	public FlashcardSet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public FlashcardSet(int fcSetId, int title, Subject subjectId, Subject authorId, int likes) {
