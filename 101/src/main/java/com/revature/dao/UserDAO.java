@@ -2,26 +2,59 @@ package com.revature.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.revature.entities.User;
 
-public interface UserDAO {
-	// C
-	User save(User u);
+public class UserDAO implements DAO<User> {
 
-	User persist(User u);
+	@Override
+	public User save(User u) {
+		Session se = sessUtil.getSession();
+		Transaction tx = se.beginTransaction();
+		int id = (int) se.save(u);
+		log.trace("The generated id is: " + id);
+		tx.commit();
+		se.close();
+		return u;
+	}
 
-	// R
-	User getById(int id);
+	@Override
+	public User getById(int id) {
+		Session se = sessUtil.getSession();
+		User u = (User) se.get(User.class, id);
+		se.close();
+		return u;
+	}
 
-	User loadById(int id);
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getAll() {
+		Session se = sessUtil.getSession();
+		Criteria c = se.createCriteria(User.class);
+		List<User> users = c.list();
+		se.close();
+		return users;
+	}
 
-	List<User> getAll();
+	@Override
+	public User update(User u) {
+		Session se = sessUtil.getSession();
+		Transaction tx = se.beginTransaction();
+		se.update(u);
+		tx.commit();
+		se.close();
+		return u;
+	}
 
-	// U
-	User update(User u);
-
-	User merge(User u);
-
-	// D
-	void delete(User u);
+	@Override
+	public void delete(User u) {
+		Session se = sessUtil.getSession();
+		Transaction tx = se.beginTransaction();
+		se.delete(u);
+		tx.commit();
+		se.close();
+	}
 }
