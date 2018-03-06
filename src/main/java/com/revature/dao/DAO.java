@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.revature.util.SessionUtil;
+
 /**
  * Hibernate DAO generic interface
  * @author Bobby McGetrick
@@ -16,6 +18,7 @@ public interface DAO<T> {
 	 * Fields
 	 ************************************************************************************/
 	Logger log = Logger.getRootLogger();
+	SessionUtil sessUtil = SessionUtil.getSessionUtil();
 	
 	/************************************************************************************
 	 * Create
