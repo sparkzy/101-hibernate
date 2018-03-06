@@ -7,17 +7,18 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.revature.entities.Question;
+
+import com.revature.entities.Quiz;
 import com.revature.util.SessionUtil;
 
-///**
-// * Question DAO for 101
-// *  
-// * @author @author Ahmed Dalaq
-// *
-// */
+/**
+ * Quiz DAO for 101
+ * 
+ * @author @author Ahmed Dalaq
+ *
+ */
 
-public class QuestionDao implements DAO<Question> {
+public class QuizDao implements DAO<Quiz> {
 
 	/************************************************************************************
 	 * Fields
@@ -29,48 +30,48 @@ public class QuestionDao implements DAO<Question> {
 	 * Constructors
 	 ************************************************************************************/
 	/**
-	 * Create new QuestionDao
+	 * Create new Quizao
 	 */
 
-	public QuestionDao() {
+	public QuizDao(Logger log) {
 		super();
-		log.info("Cunstructed new" + this.getClass());
+		this.log = log;
 	}
 
 	/************************************************************************************
 	 * toString
 	 ************************************************************************************/
 	/**
-	 * Represent QuestionDao as a String of its fields
+	 * Represent QuizDao as a String of its fields
 	 */
 
 	@Override
 	public String toString() {
-		return "QuestionDao []";
+		return "QuizDao []";
 	}
 
-	 /************************************************************************************
+	/************************************************************************************
 	 * Create
 	 ************************************************************************************/
-	 /**
-	 *
-	 */
+	/**
+	*
+	*/
 
 	@Override
-	public Question save(Question newQuestion) {
+	public Quiz save(Quiz newQuiz) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		log.info("Begining transation");
 		Transaction tx = sess.beginTransaction();
-		log.info("Saving " + newQuestion );
-		int id = (int) sess.save(newQuestion);
+		log.info("Saving " + newQuiz);
+		int id = (int) sess.save(newQuiz);
 		log.trace("The generated id is: " + id);
 		log.info("Committing transaction " + tx);
 		tx.commit();
 		log.info("Closing session " + sess);
 		sess.close();
-		log.info("Returning saved Question: " + newQuestion);
-		return newQuestion;
+		log.info("Returning saved quiz: " + newQuiz);
+		return newQuiz;
 	}
 
 	/************************************************************************************
@@ -78,68 +79,67 @@ public class QuestionDao implements DAO<Question> {
 	 ************************************************************************************/
 
 	@Override
-	public Question getById(int id) {
+	public Quiz getById(int quizId) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
-		log.info("Getting Question with id: " + id);
-		Question q = (Question) sess.get(Question.class, id);
-		log.trace("Read question: " + q);
+		log.info("Getting Quiz with id: " + quizId);
+		Quiz q = (Quiz) sess.get(Quiz.class, quizId);
+		log.trace("Read quiz: " + q);
 		
 		log.info("Closing session " + sess);
 		sess.close();
 		
-		log.info("Returning read question: " + q);
+		log.info("Returning read quiz: " + q);
 		return q;
 	}
 
 	@Override
-	public List<Question> getAll() {
+	public List<Quiz> getAll() {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
-		log.info("Creating a new Criteria for Question");
-		Criteria c = sess.createCriteria(Question.class);
-		log.info("Reading a list of question");
-		log.trace("Read liast of Question: " + c);
-		List<Question> questions = c.list();
+		log.info("Creating a new Criteria for Quiz");
+		Criteria c = sess.createCriteria(Quiz.class);
+		log.info("Reading a list of quiz");
+		log.trace("Read liast of Quiz: " + c);
+		List<Quiz> quiz = c.list();
 		log.info("Closing session " + sess);
 		sess.close();
-		return questions;
+		return quiz;
 	}
-
+	
 	/************************************************************************************
 	 * Update
 	 ************************************************************************************/
 
 	@Override
-	public Question update(Question question) {
+	public Quiz update(Quiz quizUpdate) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		log.info("Begining transation");
 		Transaction tx = sess.beginTransaction();
-		log.info("Updating question with id " + question.getQuestionId() + " to " + question);
-		sess.update(question); // question is now a persistent object
-		log.trace("Updated question " + question + ", it is now persistent");
+		log.info("Updating quiz with id " + quizUpdate.getQuizId() + " to " + quizUpdate);
+		sess.update(quizUpdate); // quiz is now a persistent object
+		log.trace("Updated quiz " + quizUpdate + ", it is now persistent");
 		log.info("Committing transaction " + tx);
 		tx.commit();
 		
-		log.info("CLosing session " + sess);
+		log.info("Closing session " + sess);
 		sess.close();
 		log.info("done");
-		return question;
+		return quizUpdate;
 	}
-
 	/************************************************************************************
 	 * Delete
 	 ************************************************************************************/
 
 	@Override
-	public void delete(Question question) {
+	public void delete(Quiz quizDelete) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		log.info("Begining transation");
 		Transaction tx = sess.beginTransaction();
-		log.info("Deleting question with id " + question.getQuestionId());
-		sess.delete(question); // question is now a persistent object
+		log.info("Deleting quiz with id " + quizDelete.getQuizId());
+		sess.delete(quizDelete); // quiz is now a persistent object
 		log.info("Committing transaction " + tx);
 		tx.commit();
 		log.info("Closing session " + sess);
