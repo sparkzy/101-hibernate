@@ -2,14 +2,11 @@ package com.revature.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-
 import com.revature.entities.Quiz;
-import com.revature.util.SessionUtil;
 
 /**
  * Quiz DAO for 101
@@ -20,11 +17,6 @@ import com.revature.util.SessionUtil;
 
 public class QuizDao implements DAO<Quiz> {
 
-	/************************************************************************************
-	 * Fields
-	 ************************************************************************************/
-	Logger log = Logger.getRootLogger();
-	SessionUtil sessUtil = SessionUtil.getSessionUtil();
 
 	/************************************************************************************
 	 * Constructors
@@ -33,9 +25,9 @@ public class QuizDao implements DAO<Quiz> {
 	 * Create new Quizao
 	 */
 
-	public QuizDao(Logger log) {
+	public QuizDao() {
 		super();
-		this.log = log;
+
 	}
 
 	/************************************************************************************

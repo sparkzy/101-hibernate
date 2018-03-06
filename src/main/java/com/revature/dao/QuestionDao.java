@@ -2,13 +2,11 @@ package com.revature.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.revature.entities.Question;
-import com.revature.util.SessionUtil;
 
 ///**
 // * Question DAO for 101
@@ -20,12 +18,6 @@ import com.revature.util.SessionUtil;
 public class QuestionDao implements DAO<Question> {
 
 	/************************************************************************************
-	 * Fields
-	 ************************************************************************************/
-	Logger log = Logger.getRootLogger();
-	SessionUtil sessUtil = SessionUtil.getSessionUtil();
-
-	/************************************************************************************
 	 * Constructors
 	 ************************************************************************************/
 	/**
@@ -34,7 +26,6 @@ public class QuestionDao implements DAO<Question> {
 
 	public QuestionDao() {
 		super();
-		log.info("Cunstructed new" + this.getClass());
 	}
 
 	/************************************************************************************
@@ -49,12 +40,12 @@ public class QuestionDao implements DAO<Question> {
 		return "QuestionDao []";
 	}
 
-	 /************************************************************************************
+	/************************************************************************************
 	 * Create
 	 ************************************************************************************/
-	 /**
-	 *
-	 */
+	/**
+	*
+	*/
 
 	@Override
 	public Question save(Question newQuestion) {
@@ -62,7 +53,7 @@ public class QuestionDao implements DAO<Question> {
 		Session sess = sessUtil.getSession();
 		log.info("Begining transation");
 		Transaction tx = sess.beginTransaction();
-		log.info("Saving " + newQuestion );
+		log.info("Saving " + newQuestion);
 		int id = (int) sess.save(newQuestion);
 		log.trace("The generated id is: " + id);
 		log.info("Committing transaction " + tx);
@@ -84,10 +75,10 @@ public class QuestionDao implements DAO<Question> {
 		log.info("Getting Question with id: " + id);
 		Question q = (Question) sess.get(Question.class, id);
 		log.trace("Read question: " + q);
-		
+
 		log.info("Closing session " + sess);
 		sess.close();
-		
+
 		log.info("Returning read question: " + q);
 		return q;
 	}
@@ -121,7 +112,7 @@ public class QuestionDao implements DAO<Question> {
 		log.trace("Updated question " + question + ", it is now persistent");
 		log.info("Committing transaction " + tx);
 		tx.commit();
-		
+
 		log.info("CLosing session " + sess);
 		sess.close();
 		log.info("done");
