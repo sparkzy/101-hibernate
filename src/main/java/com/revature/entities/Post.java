@@ -102,10 +102,70 @@ public class Post {
 			return false;
 		return true;
 	}
+	
+	/************************************************************************************
+	 * Getters and Setters
+	 ************************************************************************************/
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public User getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(User authorId) {
+		this.authorId = authorId;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public Status getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Status statusId) {
+		this.statusId = statusId;
+	}
+
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
+	}
 
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", title=" + title + ", authorId=" + authorId + ", body=" + body + ", likes="
 				+ likes + ", statusId=" + statusId + "]";
-	}
+	}	
+	
 }
