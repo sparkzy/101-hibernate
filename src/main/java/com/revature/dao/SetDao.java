@@ -6,15 +6,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.revature.entities.Flashcard;
+import com.revature.entities.FlashcardSet;
 
 /**
- * Flashcard DAO for 101
+ * Flashcard Set DAO for 101
  * 
  * @author Bobby McGetrick
  *
  */
-public class FlashcardDao implements DAO<Flashcard> {
+public class SetDao implements DAO<FlashcardSet> {
 
 	/************************************************************************************
 	 * Constructors
@@ -22,9 +22,8 @@ public class FlashcardDao implements DAO<Flashcard> {
 	/**
 	 * Create new FlashcardDao
 	 */
-	public FlashcardDao() {
+	public SetDao() {
 		super();
-		log.info("Constructed new " + this.getClass());
 	}
 	
 	/************************************************************************************
@@ -35,31 +34,31 @@ public class FlashcardDao implements DAO<Flashcard> {
 	 */
 	@Override
     public String toString() {
-        return "FlashcardDao []";
+        return "SetDao []";
     }
 	
 	/************************************************************************************
 	 * Create
 	 ************************************************************************************/
 	/**
-	 * Create a new Flashcard in the 101 DB's flashcard table
-	 * Creates a new session and transaction then saves the flashcard,
+	 * Create a new FlashcardSet in the 101 DB's fc_set table
+	 * Creates a new session and transaction then saves the flashcardSet,
 	 * commits the transaction, and closes the session
 	 * 
-	 * @param Flashcard newFlashcard
+	 * @param FlashcardSet newFcSet
 	 * 
-	 * @return Flashcard newFlashcard
+	 * @return Flashcardset newFcSet
 	 */
 	@Override
-	public Flashcard save(Flashcard newFlashcard) {
+	public FlashcardSet save(FlashcardSet newFcSet) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		
 		log.info("Begining transation");
 		Transaction trans = sess.beginTransaction();
 		
-		log.info("Saving " + newFlashcard + " to the database and getting its new id");
-		int id = (int) sess.save(newFlashcard);
+		log.info("Saving " + newFcSet + " to the database and getting its new id");
+		int id = (int) sess.save(newFcSet);
 		log.trace("The generated flashcard id is: " + id);
 		
 		log.info("Committing transaction " + trans);
@@ -68,88 +67,88 @@ public class FlashcardDao implements DAO<Flashcard> {
 		log.info("CLosing session " + sess);
 		sess.close();
 		
-		log.info("Returning saved Flashcard: " + newFlashcard);
-		return newFlashcard;
+		log.info("Returning saved Flashcard: " + newFcSet);
+		return newFcSet;
 	}
-
+	
 	/************************************************************************************
 	 * Retrieve
 	 ************************************************************************************/
 	/**
-	 * Get a Flashcard from the 101 DB's flashcard table
-	 * Creates a new session then gets the flashcard of a given id,
+	 * Get a FlashcardSet from the 101 DB's fc_set table
+	 * Creates a new session then gets the flashcardSet of a given id,
 	 * then closes the session
 	 * 
 	 * @param int id
 	 * 
-	 * @return Flashcard flashcard
+	 * @return FlashcardSet fcSet
 	 */
 	@Override
-	public Flashcard getById(int id) {
+	public FlashcardSet getById(int id) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		
 		log.info("Getting flashcard with id: " + id);
-		Flashcard flashcard = (Flashcard) sess.get(Flashcard.class, id);
-		log.trace("Read flashcard: " + flashcard);
+		FlashcardSet fcSet = (FlashcardSet) sess.get(FlashcardSet.class, id);
+		log.trace("Read flashcard: " + fcSet);
 		
 		log.info("Closing session " + sess);
 		sess.close();
 		
-		log.info("Returning read flashcard: " + flashcard);
-		return flashcard;
+		log.info("Returning read flashcard: " + fcSet);
+		return fcSet;
 	}
-
+	
 	/**
-	 * Get a List of all Flashcards from the 101 DB's flashcard table
-	 * Creates a new session then lists all flashcards,
+	 * Get a List of all FlashcardSets from the 101 DB's fc_set table
+	 * Creates a new session then lists all flashcardSets,
 	 * then closes the session
 	 * 
-	 * @return List<Flashcard> flashcards
+	 * @return List<FlashcardSet> fcSets
 	 */
 	@Override
-	public List<Flashcard> getAll() {
+	public List<FlashcardSet> getAll() {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		
-		log.info("Creating a new Criteria for Flashcards");
-		Criteria crit = sess.createCriteria(Flashcard.class);
+		log.info("Creating a new Criteria for FlashcardSets");
+		Criteria crit = sess.createCriteria(FlashcardSet.class);
 		
 		log.info("Reading a list of flashcards");
-		List<Flashcard> flashcards = crit.list();
-		log.trace("Read liast of flashcards: " + flashcards);
+		List<FlashcardSet> fcSets = crit.list();
+		log.trace("Read liast of flashcards: " + fcSets);
 		
 		log.info("Closing session " + sess);
 		sess.close();
 		
-		log.info("Returning all Flashcards: " + flashcards);
-		return flashcards;
+		log.info("Returning all Flashcards: " + fcSets);
+		return fcSets;
 	}
-
+	
 	/************************************************************************************
 	 * Update
 	 ************************************************************************************/
 	/**
-	 * Updates a flashcard in the 101 DB's flashcard table
+	 * Updates a flashcardSet in the 101 DB's fc_set table
 	 * Creates a new session and transaction,
-	 * updates a flashcard with new values based on the passed flashcard,
+	 * updates a flashcardSet with new values based on the passed flashcardSet,
 	 * commit the transaction and close the session
 	 * 
-	 * @param Flashcard updatedFC
+	 * @param FlashcardSet updatedFcSet
 	 * 
-	 * @return Flashcard updatedFC
+	 * @return FlashcardSet updatedFcSet
 	 */
 	@Override
-	public Flashcard update(Flashcard updatedFC) {
+	public FlashcardSet update(FlashcardSet updatedFcSet) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		
 		log.info("Begining transation");
 		Transaction trans = sess.beginTransaction();
 
-		log.info("Updating flashcard with id " + updatedFC.getFlashcardId() + " to " + updatedFC);
-		sess.update(updatedFC);
-		log.trace("Updated flashcard " + updatedFC + ", it is now persistent");
+		log.info("Updating flashcard with id " + updatedFcSet.getFcSetId() + " to " + updatedFcSet);
+		sess.update(updatedFcSet);
+		log.trace("Updated flashcard " + updatedFcSet + ", it is now persistent");
 
 		log.info("Committing transaction " + trans);
 		trans.commit();
@@ -157,30 +156,30 @@ public class FlashcardDao implements DAO<Flashcard> {
 		log.info("CLosing session " + sess);
 		sess.close();
 		
-		log.info("Returning updated flashcard: " + updatedFC);
-		return updatedFC;
+		log.info("Returning updated flashcard: " + updatedFcSet);
+		return updatedFcSet;
 	}
-
+	
 	/************************************************************************************
 	 * Delete
 	 ************************************************************************************/
 	/**
-	 * Deletes a flashcard from the 101 DB's flashcard table
+	 * Deletes a flashcardSet from the 101 DB's fc_set table
 	 * Creates a new session and transaction,
-	 * deletes a flashcard that matches the values of the passed flashcard,
+	 * deletes a flashcardSet that matches the values of the passed flashcardSet,
 	 * commit the transaction and close the session
 	 */
 	@Override
-	public void delete(Flashcard flashcard) {
+	public void delete(FlashcardSet fcSet) {
 		log.info("Getting a new Session");
 		Session sess = sessUtil.getSession();
 		
 		log.info("Begining transation");
 		Transaction trans = sess.beginTransaction();
 
-		log.info("Deleting flashcard with id " + flashcard.getFlashcardId());
-		sess.delete(flashcard);
-		log.trace("Updated flashcard " + flashcard + ", it is now persistent");
+		log.info("Deleting flashcard with id " + fcSet.getFcSetId());
+		sess.delete(fcSet);
+		log.trace("Updated flashcard " + fcSet + ", it is now persistent");
 
 		log.info("Committing transaction " + trans);
 		trans.commit();
